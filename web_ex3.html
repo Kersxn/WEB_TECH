@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Course Enrollment Form</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            background-color: white;
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 8px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Course Enrollment</h1>
+        <form>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname">
+
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+
+            <label for="course">Select Course:</label>
+            <select id="course" name="course">
+                <option value="bca">BCA</option>
+                <option value="bcom">B.Com</option>
+                <option value="ba">B.A</option>
+                <option value="bsc">B.Sc</option>
+            </select>
+
+            <label>Year:</label><br>
+            <input type="radio" id="1st" name="year" value="1st">
+            <label for="1st">1st Year</label><br>
+            <input type="radio" id="2nd" name="year" value="2nd">
+            <label for="2nd">2nd Year</label><br>
+            <input type="radio" id="3rd" name="year" value="3rd">
+            <label for="3rd">3rd Year</label><br><br>
+
+            <input type="submit" value="Enroll">
+        </form>
+    </div>
+
+</body>
+</html>
