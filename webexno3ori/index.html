@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood Donation Registration Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">🩸 BloodSaver</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#why">Why Donate</a></li>
+      <li><a href="#register">Register</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Home Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Donate Blood. Save Lives.</h1>
+      <p>Be the reason someone lives today.</p>
+      <a href="#register" class="btn">Become a Donor</a>
+    </div>
+  </section>
+
+  <!-- Why Donate Section -->
+  <section class="why-donate" id="why">
+    <h2>Why Donate Blood?</h2>
+    <div class="why-boxes">
+      <div class="box">
+        <h3>Help Save Lives</h3>
+        <p>One unit of blood can save up to 3 lives.</p>
+      </div>
+      <div class="box">
+        <h3>Feel Healthier</h3>
+        <p>Blood donation stimulates new blood cell production.</p>
+      </div>
+      <div class="box">
+        <h3>Be a Hero</h3>
+        <p>It only takes 15 minutes to make a huge difference.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Register Section -->
+  <section class="register" id="register">
+    <h2>Register as a Donor</h2>
+    <form class="donor-form">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="tel" placeholder="Phone Number" required />
+      <input type="number" placeholder="Age" min="18" required />
+      <select required>
+        <option value="">Select Blood Group</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>O+</option>
+        <option>O-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="impact" id="impact">
+    <h2>Real Stories, Real Impact</h2>
+    <div class="stories">
+      <div class="story">
+        <p>"Thanks to a donor, my son survived surgery."</p>
+        <span>– Riya, Mother</span>
+      </div>
+      <div class="story">
+        <p>"Donating blood makes me feel proud every time."</p>
+        <span>– Arun, Regular Donor</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact/Footer Section -->
+  <footer id="contact">
+    <p>&copy; 2025 BloodSaver | Designed with ❤️ to save lives.</p>
+  </footer>
+
+</body>
+</html>

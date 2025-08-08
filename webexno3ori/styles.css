@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #fff;
+    color: #333;
+    scroll-behavior: smooth;
+  }
+  
+  .navbar {
+    background: #b30000;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .hero {
+    background: #ffe5e5;
+    text-align: center;
+    padding: 100px 20px;
+  }
+  
+  .hero h1 {
+    font-size: 40px;
+    color: #b30000;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    background: #b30000;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  
+  .why-donate {
+    background: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .why-donate h2 {
+    font-size: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .why-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .register {
+    padding: 60px 20px;
+    background: #fff5f5;
+    text-align: center;
+  }
+  
+  .donor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .donor-form input, .donor-form select {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .donor-form button {
+    background: #b30000;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .impact {
+    background: #fff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .impact h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .stories {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .story {
+    background: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    width: 280px;
+    font-style: italic;
+  }
+  
+  footer {
+    background: #222;
+    color: #ccc;
+    padding: 20px;
+    text-align: center;
+  }
