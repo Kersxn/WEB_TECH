@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cake Order Calculator</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      width: 420px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+      text-align: left;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    button {
+      margin-top: 18px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #d35400;
+    }
+    .gallery {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .gallery img {
+      width: 120px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 3px solid transparent;
+      transition: 0.3s;
+    }
+    .gallery img.active {
+      border-color: #e67e22;
+    }
+    #result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Cake Order</h2>
+
+    <label for="cake">Select Cake:</label>
+    <select id="cake">
+      <option value="0">-- Select --</option>
+      <option value="500" data-img="images/choco.jpg">Chocolate Cake - 500</option>
+      <option value="400" data-img="images/vanilla.jpg">Vanilla Cake - 400</option>
+      <option value="600" data-img="images/redvelvet.jpg">Red Velvet Cake - 600</option>
+    </select>
+
+    <!-- Cake Gallery -->
+    <div class="gallery">
+      <img id="imgChocolate" src="images/choco.jpg" alt="Chocolate Cake">
+      <img id="imgVanilla" src="images/vanilla.jpg" alt="Vanilla Cake">
+      <img id="imgRedVelvet" src="images/redvelvet.jpg" alt="Red Velvet Cake">
+    </div>
+
+    <label for="qty">Quantity:</label>
+    <input type="number" id="qty" placeholder="Enter quantity">
+
+    <label for="decor">Decoration:</label>
+    <select id="decor">
+      <option value="0">No Decoration - 0</option>
+      <option value="100">Basic - 100</option>
+      <option value="200">Premium - 200</option>
+    </select>
+
+    <button id="calc">Calculate Bill</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // Highlight selected cake image
+      $("#cake").change(function () {
+        $(".gallery img").removeClass("active");
+        let selected = $(this).find(":selected");
+        let img = selected.data("img");
+
+        if (img) {
+          if (img.includes("chocolate")) $("#imgChocolate").addClass("active");
+          if (img.includes("vanilla")) $("#imgVanilla").addClass("active");
+          if (img.includes("redvelvet")) $("#imgRedVelvet").addClass("active");
+        }
+      });
+
+      // Calculate bill
+      $("#calc").click(function () {
+        let cake = parseFloat($("#cake").val());
+        let qty = parseInt($("#qty").val());
+        let decor = parseFloat($("#decor").val());
+
+        if (cake > 0 && qty > 0) {
+          let total = (cake * qty) + decor;
+          $("#result").html("Total Bill: " + total.toFixed(2));
+        } else {
+          $("#result").html("Please select a cake and enter a valid quantity.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
