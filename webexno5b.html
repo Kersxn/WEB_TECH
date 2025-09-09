@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Currency Converter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      width: 360px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      margin-top: 12px;
+      color: #34495e;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+    input:focus, select:focus {
+      border-color: #2980b9;
+      outline: none;
+      box-shadow: 0 0 6px #2980b955;
+    }
+    button {
+      margin-top: 18px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #2980b9;
+      transform: scale(1.05);
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Currency Converter</h2>
+    <label>Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount">
+    
+    <label>From:</label>
+    <select id="from">
+      <option value="USD">USD - US Dollar</option>
+      <option value="EUR">EUR - Euro</option>
+      <option value="INR">INR - Indian Rupee</option>
+      <option value="GBP">GBP - British Pound</option>
+    </select>
+    
+    <label>To:</label>
+    <select id="to">
+      <option value="USD">USD - US Dollar</option>
+      <option value="EUR">EUR - Euro</option>
+      <option value="INR">INR - Indian Rupee</option>
+      <option value="GBP">GBP - British Pound</option>
+    </select>
+    
+    <button onclick="convert()">Convert</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function convert() {
+      let amount = parseFloat(document.getElementById("amount").value);
+      let from = document.getElementById("from").value;
+      let to = document.getElementById("to").value;
+
+      // Sample conversion rates (static for demo)
+      let rates = {
+        "USD": 1,
+        "EUR": 0.92,
+        "INR": 83,
+        "GBP": 0.79
+      };
+
+      let result = document.getElementById("result");
+
+      if (amount > 0) {
+        let inUSD = amount / rates[from];    // Convert source -> USD
+        let converted = inUSD * rates[to];   // Convert USD -> target
+        result.innerHTML = 
+          amount + " " + from + " = " + converted.toFixed(2) + " " + to;
+      } else {
+        result.innerHTML = "⚠️ Please enter a valid amount!";
+      }
+    }
+  </script>
+</body>
+</html>
