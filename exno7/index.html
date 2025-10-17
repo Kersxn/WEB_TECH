@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calculator - Webexno7</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .input-group input {
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group input:hover {
+            border-color: #667eea;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .balance-display {
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid;
+            transition: all 0.3s ease;
+        }
+
+        .balance-display.positive {
+            background-color: #f0f9ff;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .balance-display.negative {
+            background-color: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .balance-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .balance-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .warning {
+            color: #dc2626;
+        }
+
+        .success {
+            color: #059669;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .input-group input {
+                padding: 12px;
+            }
+            
+            .calculate-btn {
+                padding: 15px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .balance-amount {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .balance-amount {
+                font-size: 1.2rem;
+            }
+            
+            .balance-message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function App() {
+            // State variables for inputs and results
+            const [income, setIncome] = useState('');
+            const [rent, setRent] = useState('');
+            const [food, setFood] = useState('');
+            const [transport, setTransport] = useState('');
+            const [other, setOther] = useState('');
+            const [balance, setBalance] = useState(null);
+            const [showResult, setShowResult] = useState(false);
+
+            // Function to validate input fields
+            const validateInputs = () => {
+                const inputs = [
+                    { value: income, name: 'Monthly Income' },
+                    { value: rent, name: 'Rent/EMI' },
+                    { value: food, name: 'Food Expenses' },
+                    { value: transport, name: 'Transport Expenses' },
+                    { value: other, name: 'Other Expenses' }
+                ];
+
+                for (let input of inputs) {
+                    if (!input.value || input.value.trim() === '') {
+                        alert(`${input.name} cannot be empty!`);
+                        return false;
+                    }
+                    
+                    const numValue = parseFloat(input.value);
+                    if (isNaN(numValue) || numValue <= 0) {
+                        alert(`${input.name} must be a positive number!`);
+                        return false;
+                    }
+                }
+                
+                return true;
+            };
+
+            // Function to calculate balance
+            const calculateBalance = () => {
+                if (!validateInputs()) {
+                    return;
+                }
+
+                const incomeAmount = parseFloat(income);
+                const rentAmount = parseFloat(rent);
+                const foodAmount = parseFloat(food);
+                const transportAmount = parseFloat(transport);
+                const otherAmount = parseFloat(other);
+
+                const calculatedBalance = incomeAmount - (rentAmount + foodAmount + transportAmount + otherAmount);
+                
+                setBalance(calculatedBalance);
+                setShowResult(true);
+            };
+
+            return (
+                <div className="container">
+                    <h1>Budget Calculator</h1>
+                    <p className="subtitle">Manage your monthly income and expenses</p>
+                    
+                    <div className="form-container">
+                        <div className="input-group">
+                            <label htmlFor="income">Monthly Income *</label>
+                            <input
+                                type="number"
+                                id="income"
+                                value={income}
+                                onChange={(e) => setIncome(e.target.value)}
+                                placeholder="Enter your monthly income"
+                                step="0.01"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="rent">Rent/EMI *</label>
+                            <input
+                                type="number"
+                                id="rent"
+                                value={rent}
+                                onChange={(e) => setRent(e.target.value)}
+                                placeholder="Enter rent or EMI amount"
+                                step="0.01"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="food">Food Expenses *</label>
+                            <input
+                                type="number"
+                                id="food"
+                                value={food}
+                                onChange={(e) => setFood(e.target.value)}
+                                placeholder="Enter food expenses"
+                                step="0.01"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="transport">Transport Expenses *</label>
+                            <input
+                                type="number"
+                                id="transport"
+                                value={transport}
+                                onChange={(e) => setTransport(e.target.value)}
+                                placeholder="Enter transport expenses"
+                                step="0.01"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="other">Other Expenses *</label>
+                            <input
+                                type="number"
+                                id="other"
+                                value={other}
+                                onChange={(e) => setOther(e.target.value)}
+                                placeholder="Enter other expenses"
+                                step="0.01"
+                                min="0"
+                            />
+                        </div>
+
+                        <button 
+                            className="calculate-btn"
+                            onClick={calculateBalance}
+                        >
+                            Calculate Balance
+                        </button>
+
+                        {showResult && (
+                            <div className="result-container">
+                                <h2>Results</h2>
+                                <div className={`balance-display ${balance < 0 ? 'negative' : 'positive'}`}>
+                                    <div className="balance-amount">
+                                        Remaining Balance: ${balance.toFixed(2)}
+                                    </div>
+                                    <div className="balance-message">
+                                        {balance < 0 ? (
+                                            <span className="warning">⚠️ You are overspending!</span>
+                                        ) : (
+                                            <span className="success">✅ Good job managing your expenses!</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
