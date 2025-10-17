@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calculator - React JS</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .budget-calculator {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        .title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 600;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .balance-display {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .balance-positive {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .balance-negative {
+            background: linear-gradient(135deg, #f44336, #da190b);
+            color: white;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .budget-calculator {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const BudgetCalculator = () => {
+            // State variables for inputs
+            const [income, setIncome] = useState('');
+            const [rent, setRent] = useState('');
+            const [food, setFood] = useState('');
+            const [transport, setTransport] = useState('');
+            const [other, setOther] = useState('');
+            const [balance, setBalance] = useState(null);
+
+            // Function to validate input fields
+            const validateInputs = () => {
+                const inputs = [
+                    { value: income, name: 'Monthly Income' },
+                    { value: rent, name: 'Rent/EMI' },
+                    { value: food, name: 'Food Expenses' },
+                    { value: transport, name: 'Transport Expenses' },
+                    { value: other, name: 'Other Expenses' }
+                ];
+
+                for (let input of inputs) {
+                    if (!input.value.trim()) {
+                        alert(`${input.name} cannot be empty!`);
+                        return false;
+                    }
+                    
+                    const numValue = parseFloat(input.value);
+                    if (isNaN(numValue) || numValue <= 0) {
+                        alert(`${input.name} must be a positive number!`);
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            // Function to calculate balance
+            const calculateBalance = () => {
+                if (!validateInputs()) {
+                    return;
+                }
+
+                const totalExpenses = parseFloat(rent) + parseFloat(food) + parseFloat(transport) + parseFloat(other);
+                const remainingBalance = parseFloat(income) - totalExpenses;
+                
+                setBalance(remainingBalance);
+            };
+
+            return (
+                <div className="budget-calculator">
+                    <h1 className="title"> Budget Calculator</h1>
+                    
+                    <div className="input-group">
+                        <label htmlFor="income">Monthly Income</label>
+                        <input
+                            type="number"
+                            id="income"
+                            value={income}
+                            onChange={(e) => setIncome(e.target.value)}
+                            placeholder="Enter your monthly income"
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="rent">Rent/EMI</label>
+                        <input
+                            type="number"
+                            id="rent"
+                            value={rent}
+                            onChange={(e) => setRent(e.target.value)}
+                            placeholder="Enter rent/EMI amount"
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="food">Food Expenses</label>
+                        <input
+                            type="number"
+                            id="food"
+                            value={food}
+                            onChange={(e) => setFood(e.target.value)}
+                            placeholder="Enter food expenses"
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="transport">Transport Expenses</label>
+                        <input
+                            type="number"
+                            id="transport"
+                            value={transport}
+                            onChange={(e) => setTransport(e.target.value)}
+                            placeholder="Enter transport expenses"
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label htmlFor="other">Other Expenses</label>
+                        <input
+                            type="number"
+                            id="other"
+                            value={other}
+                            onChange={(e) => setOther(e.target.value)}
+                            placeholder="Enter other expenses"
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
+                    <button className="calculate-btn" onClick={calculateBalance}>
+                        Calculate Balance
+                    </button>
+
+                    {balance !== null && (
+                        <div className={`balance-display ${balance >= 0 ? 'balance-positive' : 'balance-negative'}`}>
+                            <div>Remaining Balance: ₹{balance.toFixed(2)}</div>
+                            <div className="message">
+                                {balance >= 0 
+                                    ? "🎉 Good job managing your expenses!" 
+                                    : "⚠️ You are overspending!"
+                                }
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Render the Budget Calculator component
+        ReactDOM.render(<BudgetCalculator />, document.getElementById('root'));
+    </script>
+</body>
+</html>
